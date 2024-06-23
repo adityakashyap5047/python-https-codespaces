@@ -38,7 +38,26 @@ img{
               <p>Use the buttons below to make use of the interactive (OpenAPI) documentation for trying out the API dynamically.
                 or browse the project source.
               </p>
-              <button onclick="window.location.href='/docs'" type="button" class="btn btn-info">Try it out</button>
+              <div class="form-group">
+                <label for="input">Enter a number: </label>
+                <input type="text" class="form-control" id="input" placeholder="Enter a number">
+                <button onclick="generate()" type="button" class="btn btn-primary">Generate</button>
+                <div class="mt-3" id="result"></div>
+                <script>
+                  async function generate(){
+                    const input = document.getElementById('input').value;
+                    const response = await fetch('generate', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({input})
+                    });
+                    const data = await response.json();
+                    document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                  }
+                </script>
+              </div>
               <button onclick="window.location.href='https://github.com/microsoft/codespaces-project-template-py/'" type="button" class="btn btn-info">Project source</button>
             </div>
           </div>
